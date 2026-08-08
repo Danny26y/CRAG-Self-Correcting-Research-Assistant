@@ -1,0 +1,15 @@
+# Agent Framework & Logic
+langgraph>=0.2.0
+langchain>=0.3.0
+langchain-groq>=0.2.0
+
+# Vector Database & Embeddings
+chromadb>=0.5.0
+sentence-transformers>=3.0.0
+
+# Web Search Fallback
+tavily-python>=0.5.0
+
+# Support & Schemas
+pydantic>=2.8.0
+python-dotenv>=1.0.1
