@@ -1,0 +1,6 @@
+
+[server]
+fileWatcherType = "poll"
+
+[runner]
+magicEnabled = false

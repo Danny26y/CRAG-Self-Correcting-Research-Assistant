@@ -1,26 +1,33 @@
+# src/nodes/rewriter.py
 from src.services.llm_factory import get_groq_model
 from src.graph.state import AgentState
 from config.settings import settings
 
 class QueryRewriterNode:
     def __init__(self):
-        # Use Llama 70B for higher query re-formulation intelligence
         self.llm = get_groq_model(model_name=settings.MODEL_REASONING, temperature=0.2)
 
     def rewrite_query(self, state: AgentState) -> AgentState:
-        """Transforms user query into an optimized search term when retrieval fails/lacks depth."""
         original_query = state["query"]
+        history = state.get("messages", [])
         current_loop = state.get("loop_count", 0) + 1
 
-        print(f"\n [REWRITER]: Context was insufficient. Rewriting query (Attempt {current_loop})...")
+        print(f"\n🔄 [REWRITER]: Rewriting query with chat history context (Attempt {current_loop})...")
 
-        prompt = f"""You are a query optimization engine for vector search retrieval.
-The initial vector search for the user query returned irrelevant or poor context.
-Analyze the original user query and formulate a clearer, more specific search query optimized for vector retrieval.
+        # Format past 3 message turns for context
+        history_context = ""
+        if history:
+            history_context = "Past Conversation History:\n"
+            for msg in history[-4:]:
+                history_context += f"{msg['role'].capitalize()}: {msg['content']}\n"
 
-Original Query: {original_query}
+        prompt = f"""You are a query rewriter for vector database search.
+Analyze the user's latest query along with the conversation history (if any) and rewrite it into a self-contained, highly specific search query for vector retrieval.
 
-Output ONLY the revised query string. Do not include quotes, preamble, or explanation."""
+{history_context}
+Latest User Query: {original_query}
+
+Output ONLY the standalone search query string. Do not include quotes or preamble."""
 
         response = self.llm.invoke(prompt)
         revised_query = response.content.strip()

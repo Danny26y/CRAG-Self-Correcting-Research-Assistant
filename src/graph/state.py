@@ -1,5 +1,5 @@
 # src/graph/state.py
-from typing import List, TypedDict, Optional
+from typing import List, TypedDict, Optional, Dict
 
 class AgentState(TypedDict):
     query: str
@@ -9,7 +9,8 @@ class AgentState(TypedDict):
     generation: str
     citations: List[str]
     loop_count: int
-    regen_count: int               # New: tracks hallucination retry loop count
-    hallucination_feedback: Optional[str]  # New: stores evaluator critique
+    regen_count: int
+    hallucination_feedback: Optional[str]
     needs_rewrite: bool
     is_grounded: bool
+    messages: List[Dict[str, str]]
