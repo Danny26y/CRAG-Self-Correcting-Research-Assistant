@@ -14,11 +14,14 @@ def run_assistant(query: str):
     initial_state: AgentState = {
         "query": query,
         "rewritten_query": None,
+        "messages": [],
         "documents": [],
         "filtered_documents": [],
         "generation": "",
         "citations": [],
         "loop_count": 0,
+        "regen_count": 0,
+        "hallucination_feedback": None,
         "needs_rewrite": False,
         "is_grounded": True
     }

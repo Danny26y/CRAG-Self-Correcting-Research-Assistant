@@ -3,7 +3,7 @@ import os
 import pandas as pd
 from datasets import Dataset
 from ragas import evaluate
-from ragas.metrics import Faithfulness, AnswerRelevance
+from ragas.metrics import Faithfulness, AnswerRelevancy
 from ragas.llms import LangchainLLMWrapper
 from ragas.embeddings import LangchainEmbeddingsWrapper
 from langchain_groq import ChatGroq
@@ -68,7 +68,7 @@ def run_evaluation_suite():
     )
 
     faithfulness_metric = Faithfulness(llm=evaluator_llm)
-    answer_relevance_metric = AnswerRelevance(llm=evaluator_llm, embeddings=evaluator_embeddings)
+    answer_relevance_metric = AnswerRelevancy(llm=evaluator_llm, embeddings=evaluator_embeddings)
 
     # 5. Compute Ragas Benchmark Scores
     print("\n📊 Computing Ragas Metrics...")
