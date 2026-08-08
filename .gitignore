@@ -1,0 +1,13 @@
+# Environment & Variables
+.env
+venv/
+__pycache__/
+
+# Vector Database & Data Storage
+data/chroma_db/
+data/raw_docs/*
+!data/raw_docs/.gitkeep
+
+# Evaluation Results & Cache
+evals/eval_results.csv
+.langfuse/
